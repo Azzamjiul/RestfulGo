@@ -32,19 +32,29 @@ func main() {
 
 	// defer insert.Close()
 
-	results, err := db.Query("SELECT id, name FROM test")
+	// results, err := db.Query("SELECT id, name FROM test")
+	// if err != nil {
+	// 	panic(err.Error())
+	// }
+
+	// for results.Next() {
+	// 	var tag Tag
+
+	// 	err = results.Scan(&tag.ID, &tag.Name)
+	// 	if err != nil {
+	// 		panic(err.Error())
+	// 	}
+
+	// 	log.Printf(tag.Name)
+	// }
+
+	var tag Tag
+
+	err = db.QueryRow("SELECT id, name FROM test where id = ?", 2).Scan(&tag.ID, &tag.Name)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	for results.Next() {
-		var tag Tag
-
-		err = results.Scan(&tag.ID, &tag.Name)
-		if err != nil {
-			panic(err.Error())
-		}
-
-		log.Printf(tag.Name)
-	}
+	log.Println(tag.ID)
+	log.Println(tag.Name)
 }
